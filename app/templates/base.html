@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport">
+
+    <!-- Sets title based on page -->
+    <title>{% block title %}{% endblock title %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Custom Font -->
+    <link href="https://fonts.googleapis.com/css?family=DM+Serif+Display" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+          rel="stylesheet">
+    <!-- Custom CSS Stylesheets -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/button.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/events.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}">
+</head>
+
+<body>
+{% from "_formhelpers.html" import render_field %}
+<!-- Navigation Bar -->
+<nav class="navbar navbar-dark navbar-expand-md text-white navbar-fixed-top navigation-clean-button" data-bs-tooltip=""
+     data-toggle="tooltip">
+    {#
+    <form method="post">#}
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('main.home') }}">
+                <span class="d-lg-flex flex-wrap">Artist Website</span>
+            </a>
+            <button class="navbar-toggler text-right text-sm-right text-md-right text-lg-right text-xl-right"
+                    data-target="#navcol-1" data-toggle="collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon text-right"></span>
+            </button>
+            <div class="collapse navbar-collapse text-right " id="navcol-1">
+                <ul class="nav navbar-nav ml-auto nav-right">
+                    <li class="nav-item" role="presentation"><a class="nav-link active"
+                                                                href="{{ url_for('auth.artist') }}">Artists</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active"
+                                                                href="{{ url_for('auth.gallery') }}">Gallery</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active"
+                                                                href="{{ url_for('auth.events') }}">Events</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="/">About</a></li>
+                    {% if current_user.is_anonymous %}
+                    <li class="nav-item" role="presentation"><a class="nav-link active"
+                                                                href="{{ url_for('auth.login') }}">Log In</a>
+                    <li class="nav-item" role="presentation"><a class="btn btn-light action-button"
+                                                                href="{{ url_for('auth.sign_up') }}" role="button">Sign
+                        Up</a>
+                        {% else %}
+                    <li class="nav-item" role="presentation"><a class="nav-link active"
+                                                                href="{{ url_for('auth.logout') }}">Log Out</a>
+                        {% endif %}
+
+                </ul>
+                <form class="form-inline ml-auto" action="{{ url_for('main.search') }}" method="post">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search"
+                           name="search_term">
+                    <button class="btn btn-primary btn-outline-light" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        {# <p>#}
+            {# {{ render_field(form.search, class="search", placeholder="test") }}#}
+            {# </p>#}
+        {# <p>#}
+            {# <input type="submit" value="Search">#}
+            {# </p>#}
+    </form>
+</nav>
+
+<!-- Flash messages -->
+<div>
+    <p>
+        <br/>
+        {% with messages = get_flashed_messages(with_categories = true) %}
+        {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+    </p>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="http://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+{#<!-- Custom JS Scripts --> #}
+
+<script src="{{ url_for('static', filename = 'js/formError.js') }}"></script>
+
+<script src="{{ url_for('static', filename = 'js/events.js') }}"></script>
+
+<script src="{{ url_for('static', filename = 'js/upload.js') }}"></script>
+
+
+</body>
+
+</html>
+

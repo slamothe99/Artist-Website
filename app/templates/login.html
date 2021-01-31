@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block title %}
+    Log In
+{% endblock title %}
+
+{% block content %}
+    <div class="form-template">
+        <div class="form-container">
+            <form class="needs-validation" method="POST" action="" novalidate>
+                {{ form.hidden_tag() }}
+                <h2 class="text-center"><strong>Log In</strong></h2>
+                {% for field in form %}
+                    {% if field.id not in ["submit", "csrf_token"] %}
+                    <div class="form-group">
+                        {{ render_field(field, class="form-control", placeholder=field.label) }}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <input type=submit value='Login' class='btn btn-primary'>
+                </div>
+                <a class="already" href="{{ url_for('auth.sign_up') }}">Don't have an account yet? Sign up here.</a>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
